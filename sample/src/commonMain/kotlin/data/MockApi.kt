@@ -25,7 +25,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.runBlocking
+import pro.cashkeeper.inspektor.platform.runBlocking as platformRunBlocking
 import kotlinx.serialization.json.Json
 import models.Todo
 
@@ -144,16 +144,16 @@ object MockApi {
         }
     }
 
-    fun getTodoList(): List<Todo> = runBlocking {
+    fun getTodoList(): List<Todo> = platformRunBlocking {
         client.get("http://localhost/todo").body()
     }
 
-    fun getTodo(): Todo = runBlocking {
+    fun getTodo(): Todo = platformRunBlocking {
         client.get("http://localhost/todo/1").body()
 
     }
 
-    fun createTodo(): Todo = runBlocking {
+    fun createTodo(): Todo = platformRunBlocking {
         client.post("http://localhost/todo") {
             contentType(ContentType.Application.Json)
             setBody(
@@ -165,7 +165,7 @@ object MockApi {
 
     }
 
-    fun updateTodo(): Todo = runBlocking {
+    fun updateTodo(): Todo = platformRunBlocking {
         client.put("http://localhost/todo/1") {
             contentType(ContentType.Application.Json)
             setBody(
@@ -176,11 +176,11 @@ object MockApi {
         }.body()
     }
 
-    fun deleteTodo() = runBlocking {
+    fun deleteTodo() = platformRunBlocking {
         client.delete("http://localhost/todo/1").status
     }
 
-    fun patchTodo(): Todo = runBlocking {
+    fun patchTodo(): Todo = platformRunBlocking {
         client.patch("http://localhost/todo/1") {
             contentType(ContentType.Application.Json)
             setBody(
@@ -192,43 +192,43 @@ object MockApi {
         }.body()
     }
 
-    fun getJsonResponse(): String = runBlocking {
+    fun getJsonResponse(): String = platformRunBlocking {
         client.get("http://localhost/json").body()
     }
 
-    fun getTextResponse(): String = runBlocking {
+    fun getTextResponse(): String = platformRunBlocking {
         client.get("http://localhost/text").body()
     }
 
-    fun getHtmlResponse(): String = runBlocking {
+    fun getHtmlResponse(): String = platformRunBlocking {
         client.get("http://localhost/html").body()
     }
 
-    fun getXmlResponse(): String = runBlocking {
+    fun getXmlResponse(): String = platformRunBlocking {
         client.get("http://localhost/xml").body()
     }
 
-    fun getBinaryResponse(): ByteArray = runBlocking {
+    fun getBinaryResponse(): ByteArray = platformRunBlocking {
         client.get("http://localhost/binary").body()
     }
 
-    fun getSuccessResponse200(): String = runBlocking {
+    fun getSuccessResponse200(): String = platformRunBlocking {
         client.get("http://localhost/status/success/200").body()
     }
 
-    fun getErrorResponse400(): String = runBlocking {
+    fun getErrorResponse400(): String = platformRunBlocking {
         client.get("http://localhost/status/error/400").body()
     }
 
-    fun getErrorResponse404(): String = runBlocking {
+    fun getErrorResponse404(): String = platformRunBlocking {
         client.get("http://localhost/status/error/404").body()
     }
 
-    fun getErrorResponse500(): String = runBlocking {
+    fun getErrorResponse500(): String = platformRunBlocking {
         client.get("http://localhost/status/error/500").body()
     }
 
-    fun getNoResponse() = runBlocking {
+    fun getNoResponse() = platformRunBlocking {
         try {
             val response: String = client.get("http://localhost/no-response").body()
         } catch (e: Exception) {

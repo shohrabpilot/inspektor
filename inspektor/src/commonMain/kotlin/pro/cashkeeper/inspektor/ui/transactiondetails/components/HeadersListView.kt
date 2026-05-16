@@ -13,8 +13,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import pro.cashkeeper.inspektor.inspektor.generated.resources.Res
+import pro.cashkeeper.inspektor.platform.runBlocking as platformRunBlocking
 import pro.cashkeeper.inspektor.ui.components.ExpandableKeyValue
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -71,7 +71,7 @@ internal fun HeadersListView(
 }
 
 internal val headersInfo: Map<String, HeaderDoc> by lazy {
-    runBlocking {
+    platformRunBlocking {
         val string = Res.readBytes("files/docs-headers.json").decodeToString()
         Json.decodeFromString<Map<String, HeaderDoc>>(string)
     }

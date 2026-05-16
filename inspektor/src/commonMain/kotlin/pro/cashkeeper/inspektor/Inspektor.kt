@@ -13,6 +13,7 @@ import pro.cashkeeper.inspektor.data.PathMatcher
 import pro.cashkeeper.inspektor.data.UrlMatcher
 import pro.cashkeeper.inspektor.data.UrlRegexMatcher
 import pro.cashkeeper.inspektor.platform.NotificationManager
+import pro.cashkeeper.inspektor.platform.ioDispatcher
 import pro.cashkeeper.inspektor.utils.HeaderSanitizer
 import pro.cashkeeper.inspektor.utils.ReceiveStateHook
 import pro.cashkeeper.inspektor.utils.ResponseReceiveHook
@@ -53,7 +54,6 @@ import io.ktor.utils.io.charsets.Charsets
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
 import kotlin.time.Duration
@@ -178,7 +178,7 @@ public val Inspektor: ClientPlugin<InspektorConfig> = createClientPlugin(
         }
 
         val callLogger = HttpClientCallLogger(
-            inspektorDataSource, Dispatchers.IO, notificationManager
+            inspektorDataSource, ioDispatcher, notificationManager
         )
         request.attributes.put(ClientCallLogger, callLogger)
         retentionManger.checkAndCleanUp()

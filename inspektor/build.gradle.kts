@@ -1,6 +1,7 @@
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
@@ -23,6 +24,19 @@ version = project.properties["VERSION_NAME"]!!
 kotlin {
     explicitApiWarning()
     jvm()
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {
+            commonWebpackConfig {
+                devServer = (devServer ?: org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        add("/tmp") // Use a fixed string instead of project.projectDir
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
     androidTarget {
         publishLibraryVariants("release")
         compilerOptions {
@@ -65,8 +79,6 @@ kotlin {
                 implementation(libs.lifecycle.runtime.compose)
                 implementation(libs.androidx.navigation.compose)
                 implementation(libs.sqlDelight.coroutines.extensions)
-                implementation(libs.paging.compose.common)
-                implementation(libs.androidx.paging3.extensions)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.serialization.json.io)
@@ -76,7 +88,6 @@ kotlin {
                 implementation(libs.ktor.client.logging)
                 implementation(libs.jsontree)
                 implementation(libs.kstore)
-                implementation(libs.kstore.file)
             }
         }
         val commonTest by getting {
@@ -98,6 +109,9 @@ kotlin {
                 implementation(libs.sqlDelight.driver.android)
                 implementation(libs.sqlDelight.driver.sqlite)
                 implementation(libs.androidx.startup.runtime)
+                implementation(libs.paging.compose.common)
+                implementation(libs.androidx.paging3.extensions)
+                implementation(libs.kstore.file)
             }
         }
 
@@ -107,6 +121,16 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.sqlDelight.driver.sqlite)
+                implementation(libs.paging.compose.common)
+                implementation(libs.androidx.paging3.extensions)
+                implementation(libs.kstore.file)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+                implementation(libs.sqlDelight.driver.js)
             }
         }
 
@@ -117,6 +141,9 @@ kotlin {
                 implementation(libs.stately.iso.collections)
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sqlDelight.driver.native)
+                implementation(libs.paging.compose.common)
+                implementation(libs.androidx.paging3.extensions)
+                implementation(libs.kstore.file)
             }
         }
         val appleTest by creating

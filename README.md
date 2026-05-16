@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation("pro.cashkeeper.inspektor:inspektor:0.1.0")
+    implementation("pro.cashkeeper.inspektor:inspektor:0.1.1")
 }
 ```
 

@@ -8,6 +8,7 @@ internal expect val currentOs: Os
 internal sealed interface Os {
     data object ANDROID : Os
     data object IOS : Os
+    data object WASM : Os
 
     sealed interface Desktop: Os {
         data object WINDOWS : Desktop

@@ -1,12 +1,11 @@
 package pro.cashkeeper.inspektor.data
 
-import pro.cashkeeper.inspektor.platform.getAppDataDir
+import pro.cashkeeper.inspektor.platform.runBlocking as platformRunBlocking
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.extensions.getOrEmpty
 import io.github.xxfast.kstore.extensions.minus
 import io.github.xxfast.kstore.extensions.plus
 import io.github.xxfast.kstore.extensions.updatesOrEmpty
-import io.github.xxfast.kstore.file.extensions.listStoreOf
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
@@ -16,10 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.io.files.Path
-
-
 internal interface OverrideRepository {
     suspend fun add(override: Override)
 
@@ -55,7 +50,7 @@ internal class OverrideRepositoryImpl(
 
     private val cached : StateFlow<List<Override>> = store.updatesOrEmpty.stateIn(
         MainScope(), SharingStarted.WhileSubscribed(4000),
-        runBlocking {
+        platformRunBlocking {
             store.getOrEmpty()
         }
     )
@@ -72,9 +67,7 @@ internal class OverrideRepositoryImpl(
 
     companion object {
         val Instance by lazy {
-            OverrideRepositoryImpl(
-                listStoreOf<Override>(file = Path("${getAppDataDir()}/overrideStore"))
-            )
+            OverrideRepositoryImpl(createOverrideStore())
         }
     }
 }

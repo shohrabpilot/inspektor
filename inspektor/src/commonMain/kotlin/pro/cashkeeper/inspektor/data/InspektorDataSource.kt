@@ -3,8 +3,7 @@ package pro.cashkeeper.inspektor.data
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import pro.cashkeeper.inspektor.platform.ioDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlin.time.Instant
@@ -41,7 +40,7 @@ internal class InspektorDataSourceImpl(
 ) : InspektorDataSource {
 
     override suspend fun insertHttpTransaction(httpTransaction: HttpTransaction): Long =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             db.transactionWithResult {
                 db.httpTransactionQueries.insert(httpTransaction)
                 db.httpTransactionQueries.lastInsertRowId().executeAsOne()
@@ -50,14 +49,14 @@ internal class InspektorDataSourceImpl(
 
     override fun getTransactionFlow(id: Long): Flow<HttpTransaction> =
         db.httpTransactionQueries.getById(id).asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(ioDispatcher)
 
     override suspend fun getTransaction(id: Long): HttpTransaction =
         db.httpTransactionQueries.getById(id)
             .executeAsOne()
 
     override suspend fun updateHttpTransaction(httpTransaction: HttpTransaction): Unit =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             db.httpTransactionQueries.insertOrReplace(httpTransaction)
         }
 
@@ -66,7 +65,7 @@ internal class InspektorDataSourceImpl(
         startDate: Instant,
         endDate: Instant,
     ): List<HttpTransaction> =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             db.httpTransactionQueries.getAllLatestForDateRange(startDate, endDate).executeAsList()
         }
 
@@ -75,7 +74,7 @@ internal class InspektorDataSourceImpl(
         endDate: Instant,
     ): Flow<List<HttpTransaction>> =
         db.httpTransactionQueries.getAllLatestForDateRange(startDate, endDate).asFlow()
-            .mapToList(Dispatchers.IO)
+            .mapToList(ioDispatcher)
 
     override fun getAllLatestHttpTransactionsFilteredFlow(
         startDate: Instant,
@@ -92,15 +91,15 @@ internal class InspektorDataSourceImpl(
             pathQuery
         )
             .asFlow()
-            .mapToList(Dispatchers.IO)
+            .mapToList(ioDispatcher)
     }
 
 
     override fun getAllHttpTransactionsCount(): Flow<Long> =
         db.httpTransactionQueries.getAllCount().asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(ioDispatcher)
 
-    override suspend fun deleteBefore(timestamp: Instant): Unit = withContext(Dispatchers.IO) {
+    override suspend fun deleteBefore(timestamp: Instant): Unit = withContext(ioDispatcher) {
         db.httpTransactionQueries.deleteBefore(timestamp)
     }
 

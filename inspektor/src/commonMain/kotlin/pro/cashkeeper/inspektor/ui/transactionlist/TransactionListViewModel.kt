@@ -13,12 +13,11 @@ import pro.cashkeeper.inspektor.platform.FileSharer
 import pro.cashkeeper.inspektor.platform.Os
 import pro.cashkeeper.inspektor.platform.currentOs
 import pro.cashkeeper.inspektor.platform.getAppCacheDir
+import pro.cashkeeper.inspektor.platform.ioDispatcher
 import pro.cashkeeper.inspektor.ui.UiEvent
 import pro.cashkeeper.inspektor.utils.atLocalEndOfDay
 import pro.cashkeeper.inspektor.utils.atLocalStartOfDay
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -125,7 +124,7 @@ private fun CharSequence.isDigitsOnly(): Boolean {
 internal suspend fun createLogFile(
     filePath: String,
     transactions: List<HttpTransaction>
-) = withContext(Dispatchers.IO) {
+) = withContext(ioDispatcher) {
     val path = Path(filePath)
     try {
         val log = Har.Log(
