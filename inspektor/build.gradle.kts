@@ -41,6 +41,7 @@ kotlin {
             binaries {
                 framework {
                     baseName = "inspektor"
+                    freeCompilerArgs += listOf("-Xmin-setup-version=18.0")
                 }
             }
         }

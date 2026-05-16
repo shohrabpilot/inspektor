@@ -24,12 +24,12 @@ import pro.cashkeeper.inspektor.utils.observe
 import pro.cashkeeper.inspektor.utils.sanitizeHeaders
 import pro.cashkeeper.inspektor.utils.tryReadText
 import pro.cashkeeper.inspektor.utils.typeAndSubType
+import io.ktor.client.call.replaceResponse
 import io.ktor.client.plugins.api.ClientPlugin
 import io.ktor.client.plugins.api.ClientPluginBuilder
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.observer.ResponseHandler
 import io.ktor.client.plugins.observer.ResponseObserver
-import io.ktor.client.plugins.observer.wrap
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
@@ -372,10 +372,11 @@ public val Inspektor: ClientPlugin<InspektorConfig> = createClientPlugin(
                             )
                         }
                         proceedWith(
-                            response.call.wrap(
-                                content = newBody ?: response.rawContent,
+                            response.call.replaceResponse(
                                 headers = newHeaders ?: response.headers
-                            ).response
+                            ) {
+                                newBody ?: response.rawContent
+                            }.response
                         )
                     }
 
