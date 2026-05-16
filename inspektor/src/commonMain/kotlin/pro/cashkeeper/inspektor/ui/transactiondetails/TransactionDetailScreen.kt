@@ -180,7 +180,7 @@ internal fun TransactionDetailsScreen(
 
         Column(Modifier.padding(paddingValues)) {
             PrimaryTabRow(
-                selectedTabIndex = 0,
+                selectedTabIndex = selectedTabIndex,
                 indicator = {
                     TabRowDefaults.PrimaryIndicator(
                         Modifier.tabIndicatorOffset(selectedTabIndex),
