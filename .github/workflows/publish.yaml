@@ -188,12 +188,20 @@ jobs:
             exit 1
           fi
 
+          key_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${signing_key}" | awk -F: '$1 == "fpr" { print $10; exit }')"
+          if [[ -z "${key_fingerprint}" ]]; then
+            echo "::error::Could not parse a valid private key fingerprint from signing key."
+            exit 1
+          fi
+          echo "Using signing key fingerprint ending with ${key_fingerprint: -16}"
+
+          if [[ -n "${RAW_SIGNING_KEY_ID:-}" ]]; then
+            echo "::notice::Provided signing key id will be ignored. Gradle will resolve key id from the provided private key to avoid id mismatch issues."
+          fi
+
           {
             echo "ORG_GRADLE_PROJECT_mavenCentralUsername=${RAW_MAVEN_CENTRAL_USERNAME}"
             echo "ORG_GRADLE_PROJECT_mavenCentralPassword=${RAW_MAVEN_CENTRAL_PASSWORD}"
-            if [[ -n "${RAW_SIGNING_KEY_ID:-}" ]]; then
-              echo "ORG_GRADLE_PROJECT_signingInMemoryKeyId=${RAW_SIGNING_KEY_ID}"
-            fi
             if [[ -n "${RAW_SIGNING_KEY_PASSWORD:-}" ]]; then
               echo "ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=${RAW_SIGNING_KEY_PASSWORD}"
             fi
