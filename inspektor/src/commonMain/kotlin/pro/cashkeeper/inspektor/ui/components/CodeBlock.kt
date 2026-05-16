@@ -31,7 +31,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
+import pro.cashkeeper.inspektor.platform.clipEntryOf
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ internal fun CodeBlock(
     modifier: Modifier = Modifier,
     format: Format = Format.Unknown,
 ) {
-    val clipboardManager = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
 
     val scope = rememberCoroutineScope()
     val searchableTextState = remember {
@@ -106,7 +107,9 @@ internal fun CodeBlock(
             Spacer(Modifier.weight(1f))
             CopyButton(
                 onClick = {
-                    clipboardManager.setText(code)
+                    scope.launch {
+                        clipboard.setClipEntry(clipEntryOf(code.text))
+                    }
                 },
                 contentDescription = "Copy All"
             )

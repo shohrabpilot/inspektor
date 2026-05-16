@@ -30,8 +30,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.platform.LocalClipboard
+import pro.cashkeeper.inspektor.platform.clipEntryOf
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,7 +70,7 @@ internal fun TransactionDetailsScreen(
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val clipboardManager = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -106,8 +106,8 @@ internal fun TransactionDetailsScreen(
                         onClick = {
                             scope.launch {
                                 // Copy to clipboard
-                                clipboardManager.setText(
-                                    AnnotatedString(
+                                clipboard.setClipEntry(
+                                    clipEntryOf(
                                         transaction?.toCurlString() ?: ""
                                     )
                                 )
