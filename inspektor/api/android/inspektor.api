@@ -1,186 +1,174 @@
-public final class com/gyanoba/inspektor/ComposableSingletons$MainActivityKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ComposableSingletons$MainActivityKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ComposableSingletons$MainActivityKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ComposableSingletons$MainActivityKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1343326331$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/InspektorConfig {
+public final class pro/cashkeeper/inspektor/InspektorConfig {
 	public static final field $stable I
 	public final fun filter (Lkotlin/jvm/functions/Function1;)V
-	public final fun getLevel ()Lcom/gyanoba/inspektor/LogLevel;
+	public final fun getLevel ()Lpro/cashkeeper/inspektor/LogLevel;
 	public final fun getMaxContentLength ()I
+	public final fun getRetentionDuration-UwyO8pc ()J
+	public final fun getShowNotifications ()Z
 	public final fun sanitizeHeader (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun sanitizeHeader$default (Lcom/gyanoba/inspektor/InspektorConfig;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun setLevel (Lcom/gyanoba/inspektor/LogLevel;)V
+	public static synthetic fun sanitizeHeader$default (Lpro/cashkeeper/inspektor/InspektorConfig;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun setLevel (Lpro/cashkeeper/inspektor/LogLevel;)V
 	public final fun setMaxContentLength (I)V
+	public final fun setRetentionDuration-LRDsOJo (J)V
+	public final fun setShowNotifications (Z)V
 }
 
-public final class com/gyanoba/inspektor/InspektorKt {
+public final class pro/cashkeeper/inspektor/InspektorKt {
 	public static final fun getInspektor ()Lio/ktor/client/plugins/api/ClientPlugin;
 }
 
-public final class com/gyanoba/inspektor/Inspektor_androidKt {
+public final class pro/cashkeeper/inspektor/Inspektor_androidKt {
 	public static final fun openInspektor ()V
 }
 
-public final class com/gyanoba/inspektor/LogLevel : java/lang/Enum {
-	public static final field BODY Lcom/gyanoba/inspektor/LogLevel;
-	public static final field HEADERS Lcom/gyanoba/inspektor/LogLevel;
-	public static final field INFO Lcom/gyanoba/inspektor/LogLevel;
-	public static final field NONE Lcom/gyanoba/inspektor/LogLevel;
+public final class pro/cashkeeper/inspektor/LogLevel : java/lang/Enum {
+	public static final field BODY Lpro/cashkeeper/inspektor/LogLevel;
+	public static final field HEADERS Lpro/cashkeeper/inspektor/LogLevel;
+	public static final field INFO Lpro/cashkeeper/inspektor/LogLevel;
+	public static final field NONE Lpro/cashkeeper/inspektor/LogLevel;
 	public final fun getBody ()Z
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getHeaders ()Z
 	public final fun getInfo ()Z
-	public static fun valueOf (Ljava/lang/String;)Lcom/gyanoba/inspektor/LogLevel;
-	public static fun values ()[Lcom/gyanoba/inspektor/LogLevel;
+	public static fun valueOf (Ljava/lang/String;)Lpro/cashkeeper/inspektor/LogLevel;
+	public static fun values ()[Lpro/cashkeeper/inspektor/LogLevel;
 }
 
-public final class com/gyanoba/inspektor/MainActivity : androidx/activity/ComponentActivity {
+public final class pro/cashkeeper/inspektor/MainActivity : androidx/activity/ComponentActivity {
 	public static final field $stable I
 	public fun <init> ()V
 }
 
-public abstract interface annotation class com/gyanoba/inspektor/UnstableInspektorAPI : java/lang/annotation/Annotation {
+public abstract interface annotation class pro/cashkeeper/inspektor/UnstableInspektorAPI : java/lang/annotation/Annotation {
 }
 
-public final class com/gyanoba/inspektor/data/Db_androidKt {
-	public static final fun setApplicationId (Ljava/lang/String;)V
-}
-
-public final class com/gyanoba/inspektor/ui/ComposableSingletons$AppKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/ComposableSingletons$AppKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/platform/InspektorFileProvider : androidx/core/content/FileProvider {
+	public static final field $stable I
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/ui/ComposableSingletons$TransactionDetailScreenKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/ComposableSingletons$TransactionDetailScreenKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function2;
-	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/ComposableSingletons$AppKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/ComposableSingletons$AppKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-4$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-201909534$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/ui/ComposableSingletons$TransactionListScreenKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/ComposableSingletons$TransactionListScreenKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-10 Lkotlin/jvm/functions/Function2;
-	public static field lambda-11 Lkotlin/jvm/functions/Function3;
-	public static field lambda-12 Lkotlin/jvm/functions/Function3;
-	public static field lambda-13 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function4;
-	public static field lambda-4 Lkotlin/jvm/functions/Function2;
-	public static field lambda-5 Lkotlin/jvm/functions/Function2;
-	public static field lambda-6 Lkotlin/jvm/functions/Function2;
-	public static field lambda-7 Lkotlin/jvm/functions/Function2;
-	public static field lambda-8 Lkotlin/jvm/functions/Function2;
-	public static field lambda-9 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/components/ComposableSingletons$CodeBlockKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/components/ComposableSingletons$CodeBlockKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-10$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-11$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-12$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-13$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$inspektor_release ()Lkotlin/jvm/functions/Function4;
-	public final fun getLambda-4$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-5$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-6$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-7$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-8$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-9$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1348935070$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-547345123$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1026484960$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1772169815$inspektor_release ()Lkotlin/jvm/functions/Function4;
 }
 
-public final class com/gyanoba/inspektor/ui/components/ComposableSingletons$CodeBlockKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/components/ComposableSingletons$CodeBlockKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function4;
-	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/components/ComposableSingletons$DateTimePickerDialogKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/components/ComposableSingletons$DateTimePickerDialogKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$inspektor_release ()Lkotlin/jvm/functions/Function4;
-	public final fun getLambda-4$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-900229742$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$16384400$inspektor_release ()Lkotlin/jvm/functions/Function3;
 }
 
-public final class com/gyanoba/inspektor/ui/components/ComposableSingletons$DateTimePickerDialogKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/components/ComposableSingletons$DateTimePickerDialogKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function3;
-	public static field lambda-2 Lkotlin/jvm/functions/Function3;
+public final class pro/cashkeeper/inspektor/ui/components/ComposableSingletons$SearchableTextKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/components/ComposableSingletons$SearchableTextKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1159938636$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$872831402$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/ui/components/ComposableSingletons$SearchableTextKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/components/ComposableSingletons$SearchableTextKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function3;
+public final class pro/cashkeeper/inspektor/ui/components/ComposableSingletons$SimpleSearchBarKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/components/ComposableSingletons$SimpleSearchBarKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1522203699$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1792209450$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/ui/components/ComposableSingletons$SimpleSearchBarKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/components/ComposableSingletons$SimpleSearchBarKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/overriding/editoverride/ComposableSingletons$EditOverrideScreenKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/overriding/editoverride/ComposableSingletons$EditOverrideScreenKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1385869969$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1616626217$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1850636366$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-966411707$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$452078866$inspektor_release ()Lkotlin/jvm/functions/Function3;
 }
 
-public final class com/gyanoba/inspektor/ui/overriding/ComposableSingletons$EditOverrideScreenKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/overriding/ComposableSingletons$EditOverrideScreenKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-10 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function3;
-	public static field lambda-4 Lkotlin/jvm/functions/Function2;
-	public static field lambda-5 Lkotlin/jvm/functions/Function3;
-	public static field lambda-6 Lkotlin/jvm/functions/Function2;
-	public static field lambda-7 Lkotlin/jvm/functions/Function2;
-	public static field lambda-8 Lkotlin/jvm/functions/Function2;
-	public static field lambda-9 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/overriding/editoverride/components/ComposableSingletons$MatchersSectionKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/overriding/editoverride/components/ComposableSingletons$MatchersSectionKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-10$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-4$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-5$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-6$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-7$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-8$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-9$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1722727549$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-817947325$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/gyanoba/inspektor/ui/overriding/ComposableSingletons$OverridesListScreenKt {
-	public static final field INSTANCE Lcom/gyanoba/inspektor/ui/overriding/ComposableSingletons$OverridesListScreenKt;
-	public static field lambda-1 Lkotlin/jvm/functions/Function2;
-	public static field lambda-2 Lkotlin/jvm/functions/Function2;
-	public static field lambda-3 Lkotlin/jvm/functions/Function3;
-	public static field lambda-4 Lkotlin/jvm/functions/Function2;
-	public static field lambda-5 Lkotlin/jvm/functions/Function2;
-	public static field lambda-6 Lkotlin/jvm/functions/Function2;
-	public static field lambda-7 Lkotlin/jvm/functions/Function2;
+public final class pro/cashkeeper/inspektor/ui/overriding/editoverride/components/ComposableSingletons$StatusRequestResponseEditKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/overriding/editoverride/components/ComposableSingletons$StatusRequestResponseEditKt;
 	public fun <init> ()V
-	public final fun getLambda-1$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-2$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-3$inspektor_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda-4$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-5$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-6$inspektor_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda-7$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2093376158$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1631292569$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1674944220$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/overriding/overrideslist/ComposableSingletons$OverridesListScreenKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/overriding/overrideslist/ComposableSingletons$OverridesListScreenKt;
+	public fun <init> ()V
+	public final fun getLambda$-1140906220$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1442913666$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-554227129$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-652222540$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1930260471$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$677065414$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/overriding/overrideslist/components/ComposableSingletons$OverrideRowKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/overriding/overrideslist/components/ComposableSingletons$OverrideRowKt;
+	public fun <init> ()V
+	public final fun getLambda$466207895$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/transactiondetails/ComposableSingletons$TransactionDetailScreenKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/transactiondetails/ComposableSingletons$TransactionDetailScreenKt;
+	public fun <init> ()V
+	public final fun getLambda$-1508351373$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1744216547$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-378306138$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-696405773$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/transactionlist/ComposableSingletons$TransactionListScreenKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/transactionlist/ComposableSingletons$TransactionListScreenKt;
+	public fun <init> ()V
+	public final fun getLambda$-1325284604$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1421913855$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1735254053$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-324688820$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-75677181$inspektor_release ()Lkotlin/jvm/functions/Function4;
+	public final fun getLambda$1405321817$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1878560137$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2089774624$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2104528964$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$327364861$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$337541120$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$434170371$inspektor_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$930328676$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/transactionlist/components/ComposableSingletons$DeleteDialogKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/transactionlist/components/ComposableSingletons$DeleteDialogKt;
+	public fun <init> ()V
+	public final fun getLambda$-423934273$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-834544639$inspektor_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$890410266$inspektor_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class pro/cashkeeper/inspektor/ui/transactionlist/components/ComposableSingletons$TransactionItemKt {
+	public static final field INSTANCE Lpro/cashkeeper/inspektor/ui/transactionlist/components/ComposableSingletons$TransactionItemKt;
+	public fun <init> ()V
+	public final fun getLambda$1856197308$inspektor_release ()Lkotlin/jvm/functions/Function2;
 }
 

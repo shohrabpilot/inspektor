@@ -23,7 +23,7 @@ kotlin {
         it.binaries.framework {
             baseName = "InspektorSample"
             isStatic = true
-            freeCompilerArgs += listOf("-Xmin-setup-version=18.0")
+            freeCompilerArgs += listOf("-Xmin-setup-version=18.0", "-Xexpect-actual-classes")
         }
     }
 

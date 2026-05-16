@@ -27,6 +27,7 @@ kotlin {
         publishLibraryVariants("release")
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_1_8)
+            freeCompilerArgs.add("-Xexpect-actual-classes")
         }
     }
     val iosArm64 = iosArm64()

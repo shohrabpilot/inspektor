@@ -30,13 +30,13 @@ internal fun Instant.atLocalEndOfDay(timeZone: TimeZone = TimeZone.currentSystem
 
 internal object DateTimeFormatters {
     internal val simpleLocalFormatter = LocalDateTime.Format {
-        dayOfMonth(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year()
+        day(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year()
         hour(); char(':'); minute(); char(':'); second()
     }
 
 
     internal val simpleFormatter = DateTimeComponents.Format {
-        dayOfMonth(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year();
+        day(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year();
         hour(); char(':'); minute(); char(':'); second()
     }
 }
@@ -45,7 +45,7 @@ internal object DateTimeFormatters {
 internal object DateFormatters {
 
     internal val simpleLocalFormatter = LocalDate.Format {
-        dayOfMonth(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year()
+        day(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); year()
     }
 }
 

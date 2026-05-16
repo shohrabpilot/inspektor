@@ -56,7 +56,7 @@ internal fun HeadersView(transaction: HttpTransaction) {
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        text = transaction.error ?: "",
+                        text = transaction.error,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                     )
