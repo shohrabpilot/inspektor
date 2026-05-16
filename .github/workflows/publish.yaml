@@ -162,6 +162,13 @@ jobs:
         run: |
           set -euo pipefail
 
+          extract_fingerprint() {
+            local key="$1"
+            gpg --batch --with-colons --import-options show-only --import <<< "${key}" 2>/dev/null \
+              | awk -F: '$1 == "fpr" { print $10; exit }' \
+              || true
+          }
+
           missing=()
           [[ -n "${RAW_SIGNING_KEY:-}" ]] || missing+=("signing key")
           [[ -n "${RAW_MAVEN_CENTRAL_USERNAME:-}" ]] || missing+=("maven central username")
@@ -193,7 +200,7 @@ jobs:
             exit 1
           fi
 
-          key_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${signing_key}" 2>/dev/null | awk -F: '$1 == "fpr" { print $10; exit }')"
+          key_fingerprint="$(extract_fingerprint "${signing_key}")"
           if [[ -z "${key_fingerprint}" ]]; then
             echo "::warning::Could not parse key as-is. Trying to repair armored payload (drop checksum and normalize body)."
             body="$(printf '%s\n' "${signing_key}" \
@@ -214,7 +221,7 @@ jobs:
                   echo "-----END PGP PRIVATE KEY BLOCK-----"
                 }
               )"
-              repaired_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${repaired_key}" 2>/dev/null | awk -F: '$1 == "fpr" { print $10; exit }')"
+              repaired_fingerprint="$(extract_fingerprint "${repaired_key}")"
               if [[ -n "${repaired_fingerprint}" ]]; then
                 signing_key="${repaired_key}"
                 key_fingerprint="${repaired_fingerprint}"
