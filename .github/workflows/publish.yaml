@@ -172,6 +172,11 @@ jobs:
           fi
 
           signing_key="${RAW_SIGNING_KEY//$'\r'/}"
+          # Remove accidental surrounding quotes added while storing secrets.
+          signing_key="${signing_key#\"}"
+          signing_key="${signing_key%\"}"
+          signing_key="${signing_key#\'}"
+          signing_key="${signing_key%\'}"
           # Support secrets stored as a single line containing literal '\n'.
           signing_key="${signing_key//\\n/$'\n'}"
 
@@ -188,9 +193,37 @@ jobs:
             exit 1
           fi
 
-          key_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${signing_key}" | awk -F: '$1 == "fpr" { print $10; exit }')"
+          key_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${signing_key}" 2>/dev/null | awk -F: '$1 == "fpr" { print $10; exit }')"
           if [[ -z "${key_fingerprint}" ]]; then
-            echo "::error::Could not parse a valid private key fingerprint from signing key."
+            echo "::warning::Could not parse key as-is. Trying to repair armored payload (drop checksum and normalize body)."
+            body="$(printf '%s\n' "${signing_key}" \
+              | sed -n '/^-----BEGIN PGP PRIVATE KEY BLOCK-----$/,/^-----END PGP PRIVATE KEY BLOCK-----$/p' \
+              | sed '1d;$d' \
+              | sed '/^[[:space:]]*$/d' \
+              | sed '/^Version:/d;/^Comment:/d;/^Charset:/d;/^Hash:/d;/^MessageID:/d' \
+              | sed '/^=/d' \
+              | tr -d '[:space:]')"
+
+            if [[ -n "${body}" ]]; then
+              repaired_key="$(
+                {
+                  echo "-----BEGIN PGP PRIVATE KEY BLOCK-----"
+                  echo
+                  printf '%s' "${body}" | fold -w 64
+                  echo
+                  echo "-----END PGP PRIVATE KEY BLOCK-----"
+                }
+              )"
+              repaired_fingerprint="$(gpg --batch --with-colons --import-options show-only --import <<< "${repaired_key}" 2>/dev/null | awk -F: '$1 == "fpr" { print $10; exit }')"
+              if [[ -n "${repaired_fingerprint}" ]]; then
+                signing_key="${repaired_key}"
+                key_fingerprint="${repaired_fingerprint}"
+                echo "::notice::Recovered signing key by rebuilding armored payload."
+              fi
+            fi
+          fi
+          if [[ -z "${key_fingerprint}" ]]; then
+            echo "::error::Could not parse a valid private key fingerprint from signing key. Re-export with: gpg --export-secret-keys --armor <key-id>"
             exit 1
           fi
           echo "Using signing key fingerprint ending with ${key_fingerprint: -16}"
