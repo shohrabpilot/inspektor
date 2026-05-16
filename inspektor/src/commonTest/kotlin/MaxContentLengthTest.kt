@@ -19,7 +19,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import utils.KStoreInMemoryCodec
 import utils.NoOpDataSource
 import kotlin.test.Test
@@ -50,7 +50,7 @@ class MaxContentLengthTest {
     }
 
     @Test
-    fun `test maxContentLength is respected by request`() = runBlocking {
+    fun `test maxContentLength is respected by request`() = runTest {
         val maxContentLength = 100
         val largeRequestBody = "A".repeat(200)
 
@@ -77,7 +77,7 @@ class MaxContentLengthTest {
     }
 
     @Test
-    fun `test maxContentLength is respected by response`() = runBlocking {
+    fun `test maxContentLength is respected by response`() = runTest {
         val maxContentLength = 100
         val largeResponseBody = "A".repeat(200)
 
