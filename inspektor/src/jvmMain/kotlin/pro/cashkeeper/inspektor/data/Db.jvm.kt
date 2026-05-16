@@ -24,6 +24,8 @@ internal actual object DriverFactory {
     }
 }
 
+internal const val DEFAULT_APPLICATION_ID = "pro.cashkeeper.inspektor.desktop"
+
 
 private fun getDatabasePath(): String {
     val dbPath = Paths.get(getAppDataDir(), DB_NAME).toString()

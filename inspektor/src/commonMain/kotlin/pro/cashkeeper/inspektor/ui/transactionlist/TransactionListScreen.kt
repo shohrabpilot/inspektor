@@ -113,6 +113,7 @@ internal fun TransactionListScreen(
         viewModel.endDate.collectAsState().value,
         viewModel::onDateRangeSelected,
         viewModel::deleteTransactions,
+        viewModel::deleteAllTransactions,
         viewModel::shareAsHar,
         snackbarHostState,
     )
@@ -131,11 +132,13 @@ internal fun TransactionListScreen(
     endDate: Instant,
     onDateRangeSelected: (Instant, Instant) -> Unit,
     onDeleteTransactions: (Instant) -> Unit,
+    onDeleteAllTransactions: () -> Unit,
     onShareAsHar: () -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
     var showDateRangePicker by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showDeleteAllConfirmation by remember { mutableStateOf(false) }
 
     var showMenu by remember { mutableStateOf(false) }
     var showSearch by remember { mutableStateOf(false) }
@@ -155,6 +158,29 @@ internal fun TransactionListScreen(
             onConfirm = {
                 onDeleteTransactions(it)
                 showDeleteDialog = false
+            }
+        )
+    }
+
+    if (showDeleteAllConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showDeleteAllConfirmation = false },
+            title = { Text("Delete All Transactions") },
+            text = { Text("Are you sure you want to delete all transactions? This action cannot be undone.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onDeleteAllTransactions()
+                        showDeleteAllConfirmation = false
+                    }
+                ) {
+                    Text("Delete All", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteAllConfirmation = false }) {
+                    Text("Cancel")
+                }
             }
         )
     }
@@ -219,6 +245,20 @@ internal fun TransactionListScreen(
                                     Icon(
                                         Icons.Default.Delete,
                                         contentDescription = null
+                                    )
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Delete All") },
+                                onClick = {
+                                    showDeleteAllConfirmation = true
+                                    showMenu = false
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.error
                                     )
                                 }
                             )

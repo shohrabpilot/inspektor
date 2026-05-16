@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +23,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,7 +59,13 @@ internal fun TransactionDetailsScreen(
         TransactionDetailsViewModel(transactionId, InspektorDataSourceImpl.Instance)
     }
     TransactionDetailsScreen(
-        viewModel.transaction.collectAsState().value, onBack, openAddOverrideScreen
+        viewModel.transaction.collectAsState().value,
+        onBack,
+        openAddOverrideScreen,
+        onDelete = {
+            viewModel.deleteTransaction()
+            onBack()
+        }
     )
 }
 
@@ -67,10 +76,36 @@ internal fun TransactionDetailsScreen(
     transaction: HttpTransaction?,
     onBack: () -> Unit,
     openAddOverrideScreen: () -> Unit,
+    onDelete: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val clipboard = LocalClipboard.current
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+
+    if (showDeleteConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmation = false },
+            title = { Text("Delete Transaction") },
+            text = { Text("Are you sure you want to delete this transaction?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onDelete()
+                        showDeleteConfirmation = false
+                    }
+                ) {
+                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirmation = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -122,6 +157,13 @@ internal fun TransactionDetailsScreen(
                         onClick = openAddOverrideScreen,
                         tooltipText = "Add Override",
                     ) { AddOverrideIcon() }
+                    IconButton(onClick = { showDeleteConfirmation = true }) {
+                        Icon(
+                            Icons.Filled.Delete,
+                            contentDescription = "Delete",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
                 },
             )
         },

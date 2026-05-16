@@ -54,4 +54,12 @@ object NoOpDataSource : InspektorDataSource {
     override suspend fun deleteBefore(timestamp: Instant) {
         // no-op
     }
+
+    override suspend fun deleteAll() {
+        // no-op
+    }
+
+    override suspend fun delete(id: Long) {
+        // no-op
+    }
 }

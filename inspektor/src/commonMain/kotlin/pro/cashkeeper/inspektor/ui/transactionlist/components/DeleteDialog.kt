@@ -1,22 +1,33 @@
 package pro.cashkeeper.inspektor.ui.transactionlist.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import pro.cashkeeper.inspektor.utils.DateFormatters
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import pro.cashkeeper.inspektor.utils.atLocalStartOfDay
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format
-import kotlinx.datetime.toLocalDateTime
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,45 +36,58 @@ internal fun DeleteDialog(
     onDismissRequest: () -> Unit,
     onConfirm: (Instant) -> Unit,
 ) {
-    val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
-    AlertDialog(
+    val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
+    BasicAlertDialog(
         onDismissRequest = onDismissRequest,
-        title = { Text("Delete Transactions") },
-        text = {
-            Column {
-                Text("Are you sure you want to delete all transactions ${
-                    datePickerState.selectedDateInstant?.atLocalStartOfDay(TimeZone.currentSystemDefault())
-                        ?.toLocalDateTime(TimeZone.currentSystemDefault())?.date
-                        ?.format(DateFormatters.simpleLocalFormatter)?.let { "before $it" } ?: ""
-                }?")
-                DatePicker(
-                    title = null,
-                    headline = null,
-                    showModeToggle = false,
-                    state = datePickerState,
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirm(
-                        datePickerState.selectedDateInstant
-                            ?.atLocalStartOfDay(TimeZone.currentSystemDefault())
-                            ?: Clock.System.now()
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+        Column(
+            Modifier.padding(12.dp).background(
+                MaterialTheme.colorScheme.surface, RoundedCornerShape(20.dp)
+            )
+        ) {
+            DatePicker(
+                state = datePickerState,
+                title = {
+                    Text(
+                        "Delete Transactions",
+                        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 24.dp),
+                        style = MaterialTheme.typography.labelLarge
                     )
-                    onDismissRequest()
-                }
+                },
+                headline = {
+                    Text(
+                        "Delete transactions before...",
+                        modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 12.dp),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                },
+                showModeToggle = true,
+                modifier = Modifier.heightIn(max = 640.dp).weight(1f, fill = false),
+            )
+            Row(
+                Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.End,
             ) {
-                Text("Delete")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text("Cancel")
+                OutlinedButton(onClick = onDismissRequest) {
+                    Text("Cancel")
+                }
+                Spacer(Modifier.width(8.dp))
+                Button(
+                    onClick = {
+                        onConfirm(
+                            datePickerState.selectedDateInstant
+                                ?.atLocalStartOfDay(TimeZone.currentSystemDefault())
+                                ?: Clock.System.now()
+                        )
+                        onDismissRequest()
+                    }
+                ) {
+                    Text("Delete")
+                }
             }
         }
-    )
+    }
 }
 
 

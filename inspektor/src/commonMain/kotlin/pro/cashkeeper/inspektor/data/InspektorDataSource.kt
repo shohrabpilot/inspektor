@@ -33,6 +33,8 @@ internal interface InspektorDataSource {
 
     fun getAllHttpTransactionsCount(): Flow<Long>
     suspend fun deleteBefore(timestamp: Instant)
+    suspend fun deleteAll()
+    suspend fun delete(id: Long)
 }
 
 internal class InspektorDataSourceImpl(
@@ -101,6 +103,14 @@ internal class InspektorDataSourceImpl(
 
     override suspend fun deleteBefore(timestamp: Instant): Unit = withContext(ioDispatcher) {
         db.httpTransactionQueries.deleteBefore(timestamp)
+    }
+
+    override suspend fun deleteAll(): Unit = withContext(ioDispatcher) {
+        db.httpTransactionQueries.deleteAll()
+    }
+
+    override suspend fun delete(id: Long): Unit = withContext(ioDispatcher) {
+        db.httpTransactionQueries.delete(id)
     }
 
     companion object {

@@ -80,6 +80,12 @@ internal class TransactionListViewModel(
         }
     }
 
+    fun deleteAllTransactions() {
+        viewModelScope.launch {
+            inspektorDataSource.deleteAll()
+        }
+    }
+
     fun onDateRangeSelected(startDate: Instant, endDate: Instant) {
         _startDate.value = startDate.atLocalStartOfDay()
         _endDate.value = endDate.atLocalEndOfDay()

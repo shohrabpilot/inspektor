@@ -1,13 +1,17 @@
 package pro.cashkeeper.inspektor.platform
 
 import pro.cashkeeper.inspektor.data.APPLICATION_ID
+import pro.cashkeeper.inspektor.data.DEFAULT_APPLICATION_ID
+import pro.cashkeeper.inspektor.utils.log
 import java.nio.file.Paths
 
 internal actual fun getAppDataDir(): String {
-    require(APPLICATION_ID != null) {
-        "Application ID must be provided for the desktop platforms"
+    val appId = APPLICATION_ID?.takeIf { it.isNotBlank() } ?: DEFAULT_APPLICATION_ID.also {
+        log("Inspektor") {
+            "Application ID was not set. Falling back to default desktop app id: $it. " +
+                    "Call setApplicationId(...) during startup to customize this path."
+        }
     }
-    val appId = APPLICATION_ID!!
     return when (currentOs as Os.Desktop) {
         Os.Desktop.WINDOWS -> {
             // %APPDATA% or a custom directory
