@@ -256,4 +256,4 @@ jobs:
           export ORG_GRADLE_PROJECT_signingInMemoryKeyPassword="${RAW_SIGNING_KEY_PASSWORD:-}"
           export ORG_GRADLE_PROJECT_signingInMemoryKey="${signing_key}"
 
-          ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
+          ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
