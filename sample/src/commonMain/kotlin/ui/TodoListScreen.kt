@@ -1,4 +1,4 @@
-package com.gyanoba.inspektor.sample.ui
+package pro.cashkeeper.inspektor.sample.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.gyanoba.inspektor.openInspektor
-import com.gyanoba.inspektor.sample.ui.components.Center
+import pro.cashkeeper.inspektor.openInspektor
+import pro.cashkeeper.inspektor.sample.ui.components.Center
 import data.JsonPlaceHolderApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

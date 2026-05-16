@@ -1,4 +1,4 @@
-import com.gyanoba.inspektor.ClientCallLogger
+import pro.cashkeeper.inspektor.ClientCallLogger
 import io.ktor.client.engine.mock.respondOk
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData

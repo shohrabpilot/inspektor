@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
 }
 
-group = "com.gyanoba.inspektor.sample"
+group = "pro.cashkeeper.inspektor.sample"
 version = "1.0"
 
 kotlin {
@@ -88,7 +88,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gyanoba.inspektor.sample"
+    namespace = "pro.cashkeeper.inspektor.sample"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -120,7 +120,7 @@ compose.desktop {
         }
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.gyanoba.inspektor.sample"
+            packageName = "pro.cashkeeper.inspektor.sample"
             packageVersion = "1.0.0"
             modules("java.sql")
         }

@@ -1,4 +1,4 @@
-package com.gyanoba.inspektor.sample
+package pro.cashkeeper.inspektor.sample
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -6,9 +6,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gyanoba.inspektor.sample.ui.MockApiScreen
-import com.gyanoba.inspektor.sample.ui.TodoDetailsScreen
-import com.gyanoba.inspektor.sample.ui.TodoListScreen
+import pro.cashkeeper.inspektor.sample.ui.MockApiScreen
+import pro.cashkeeper.inspektor.sample.ui.TodoDetailsScreen
+import pro.cashkeeper.inspektor.sample.ui.TodoListScreen
 
 
 @Composable

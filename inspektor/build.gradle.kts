@@ -17,7 +17,7 @@ plugins {
     alias(libs.plugins.mokkery)
 }
 
-group = "com.gyanoba.inspektor"
+group = "pro.cashkeeper.inspektor"
 version = project.properties["VERSION_NAME"]!!
 
 kotlin {
@@ -128,7 +128,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gyanoba.inspektor"
+    namespace = "pro.cashkeeper.inspektor"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -149,7 +149,7 @@ fun Project.linkSqlite() {
 sqldelight {
     databases {
         create("InspektorDatabase") {
-            packageName.set("com.gyanoba.inspektor.data")
+            packageName.set("pro.cashkeeper.inspektor.data")
         }
     }
 }

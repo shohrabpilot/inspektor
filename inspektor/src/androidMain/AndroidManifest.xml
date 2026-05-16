@@ -9,11 +9,11 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.gyanoba.inspektor.utils.ContextInitializer"
+                android:name="pro.cashkeeper.inspektor.utils.ContextInitializer"
                 android:value="androidx.startup" />
         </provider>
         <provider
-            android:name="com.gyanoba.inspektor.platform.InspektorFileProvider"
+            android:name="pro.cashkeeper.inspektor.platform.InspektorFileProvider"
             android:authorities="${applicationId}.inspektor.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -22,7 +22,7 @@
                 android:resource="@xml/inspektor_share_paths"/>
         </provider>
         <activity
-            android:name="com.gyanoba.inspektor.MainActivity"
+            android:name="pro.cashkeeper.inspektor.MainActivity"
             android:label="Inspektor"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Material.Light.NoActionBar" />

@@ -1,7 +1,7 @@
 package data
 
-import com.gyanoba.inspektor.Inspektor
-import com.gyanoba.inspektor.LogLevel
+import pro.cashkeeper.inspektor.Inspektor
+import pro.cashkeeper.inspektor.LogLevel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

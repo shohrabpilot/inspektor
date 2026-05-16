@@ -1,4 +1,4 @@
-package com.gyanoba.inspektor.sample.ui
+package pro.cashkeeper.inspektor.sample.ui
 
 
 import androidx.compose.foundation.layout.Arrangement
@@ -26,8 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.gyanoba.inspektor.openInspektor
-import com.gyanoba.inspektor.sample.data.MockApi
+import pro.cashkeeper.inspektor.openInspektor
+import pro.cashkeeper.inspektor.sample.data.MockApi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

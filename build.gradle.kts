@@ -19,7 +19,7 @@ allprojects {
 
 apiValidation {
     ignoredProjects.addAll(listOf("sample"))
-    ignoredPackages.addAll(listOf("com.gyanoba.inspektor.data"))
+    ignoredPackages.addAll(listOf("pro.cashkeeper.inspektor.data"))
     ignoredClasses.add("**.ComposableSingletons$*Kt")
     ignoredClasses.add("**.MainActivityKt") // If MainActivityKt also has unstable parts
     ignoredClasses.add("**.AppKt")

@@ -1,8 +1,8 @@
 package utils
 
-import com.gyanoba.inspektor.data.GetAllLatestWithLimit
-import com.gyanoba.inspektor.data.HttpTransaction
-import com.gyanoba.inspektor.data.InspektorDataSource
+import pro.cashkeeper.inspektor.data.GetAllLatestWithLimit
+import pro.cashkeeper.inspektor.data.HttpTransaction
+import pro.cashkeeper.inspektor.data.InspektorDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlin.time.Instant

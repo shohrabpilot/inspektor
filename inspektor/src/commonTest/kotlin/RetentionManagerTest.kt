@@ -1,5 +1,5 @@
-import com.gyanoba.inspektor.RetentionManager
-import com.gyanoba.inspektor.data.InspektorDataSource
+import pro.cashkeeper.inspektor.RetentionManager
+import pro.cashkeeper.inspektor.data.InspektorDataSource
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.throws
 import dev.mokkery.every

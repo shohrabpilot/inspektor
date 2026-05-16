@@ -1,4 +1,4 @@
-package com.gyanoba.inspektor.sample.data
+package pro.cashkeeper.inspektor.sample.data
 
 internal const val todoListJson = """[
     {"id": 1, "userId": 1, "title": "Todo 1", "completed": false},

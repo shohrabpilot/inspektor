@@ -2,15 +2,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.gyanoba.inspektor.UnstableInspektorAPI
-import com.gyanoba.inspektor.data.setApplicationId
-import com.gyanoba.inspektor.sample.App
+import pro.cashkeeper.inspektor.UnstableInspektorAPI
+import pro.cashkeeper.inspektor.data.setApplicationId
+import pro.cashkeeper.inspektor.sample.App
 import java.awt.Dimension
 
 @OptIn(UnstableInspektorAPI::class)
 fun main() = application {
     // set application id for desktop platforms to resolve the folder in which database will be stored
-    setApplicationId("com.gyanoba.inspektor.sample")
+    setApplicationId("pro.cashkeeper.inspektor.sample")
     Window(
         title = "Inspektor Sample",
         state = rememberWindowState(width = 800.dp, height = 600.dp),

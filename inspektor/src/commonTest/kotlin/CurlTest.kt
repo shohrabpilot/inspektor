@@ -1,6 +1,6 @@
-import com.gyanoba.inspektor.data.MutableHttpTransaction
-import com.gyanoba.inspektor.data.toImmutable
-import com.gyanoba.inspektor.utils.toCurlString
+import pro.cashkeeper.inspektor.data.MutableHttpTransaction
+import pro.cashkeeper.inspektor.data.toImmutable
+import pro.cashkeeper.inspektor.utils.toCurlString
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
