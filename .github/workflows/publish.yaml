@@ -152,11 +152,55 @@ jobs:
           distribution: 'zulu'
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Deploy
+      - name: Prepare publish credentials
         env:
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyId }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyPassword }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey }}
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+          RAW_SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey || secrets.SIGNING_IN_MEMORY_KEY || secrets.SIGNING_KEY }}
+          RAW_SIGNING_KEY_ID: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyId || secrets.SIGNING_IN_MEMORY_KEY_ID || secrets.SIGNING_KEY_ID }}
+          RAW_SIGNING_KEY_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyPassword || secrets.SIGNING_IN_MEMORY_KEY_PASSWORD || secrets.SIGNING_KEY_PASSWORD }}
+          RAW_MAVEN_CENTRAL_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME || secrets.MAVEN_CENTRAL_USERNAME }}
+          RAW_MAVEN_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD || secrets.MAVEN_CENTRAL_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          missing=()
+          [[ -n "${RAW_SIGNING_KEY:-}" ]] || missing+=("signing key")
+          [[ -n "${RAW_MAVEN_CENTRAL_USERNAME:-}" ]] || missing+=("maven central username")
+          [[ -n "${RAW_MAVEN_CENTRAL_PASSWORD:-}" ]] || missing+=("maven central password")
+          if (( ${#missing[@]} > 0 )); then
+            echo "::error::Missing publish secrets: ${missing[*]}"
+            exit 1
+          fi
+
+          signing_key="${RAW_SIGNING_KEY//$'\r'/}"
+          # Support secrets stored as a single line containing literal '\n'.
+          signing_key="${signing_key//\\n/$'\n'}"
+
+          if [[ "${signing_key}" != *"BEGIN PGP PRIVATE KEY BLOCK"* ]]; then
+            echo "::warning::Signing key does not look ASCII-armored. Attempting base64 decode."
+            decoded="$(printf '%s' "${signing_key}" | base64 --decode 2>/dev/null || printf '%s' "${signing_key}" | base64 -D 2>/dev/null || true)"
+            if [[ "${decoded}" == *"BEGIN PGP PRIVATE KEY BLOCK"* ]]; then
+              signing_key="${decoded}"
+            fi
+          fi
+
+          if [[ "${signing_key}" != *"BEGIN PGP PRIVATE KEY BLOCK"* ]]; then
+            echo "::error::Invalid signing key format. Use full ASCII-armored private key from: gpg --export-secret-keys --armor <key-id>"
+            exit 1
+          fi
+
+          {
+            echo "ORG_GRADLE_PROJECT_mavenCentralUsername=${RAW_MAVEN_CENTRAL_USERNAME}"
+            echo "ORG_GRADLE_PROJECT_mavenCentralPassword=${RAW_MAVEN_CENTRAL_PASSWORD}"
+            if [[ -n "${RAW_SIGNING_KEY_ID:-}" ]]; then
+              echo "ORG_GRADLE_PROJECT_signingInMemoryKeyId=${RAW_SIGNING_KEY_ID}"
+            fi
+            if [[ -n "${RAW_SIGNING_KEY_PASSWORD:-}" ]]; then
+              echo "ORG_GRADLE_PROJECT_signingInMemoryKeyPassword=${RAW_SIGNING_KEY_PASSWORD}"
+            fi
+            echo "ORG_GRADLE_PROJECT_signingInMemoryKey<<EOF"
+            printf '%s\n' "${signing_key}"
+            echo "EOF"
+          } >> "${GITHUB_ENV}"
+
+      - name: Deploy
         run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
