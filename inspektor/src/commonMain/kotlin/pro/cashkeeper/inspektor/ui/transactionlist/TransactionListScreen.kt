@@ -71,10 +71,8 @@ import pro.cashkeeper.inspektor.data.InspektorDataSourceImpl
 import pro.cashkeeper.inspektor.platform.FileSharer
 import pro.cashkeeper.inspektor.platform.getAppName
 import pro.cashkeeper.inspektor.ui.UiEvent
-import pro.cashkeeper.inspektor.ui.components.AddOverrideIcon
 import pro.cashkeeper.inspektor.ui.components.DateRangeButton
 import pro.cashkeeper.inspektor.ui.components.DateRangePickerDialog
-import pro.cashkeeper.inspektor.ui.components.DefaultIconButton
 import pro.cashkeeper.inspektor.ui.components.Logo
 import pro.cashkeeper.inspektor.ui.components.SimpleSearchBar
 import pro.cashkeeper.inspektor.ui.theme.errorColor
@@ -90,36 +88,40 @@ import kotlinx.datetime.toLocalDateTime
 
 // ─── Status color helpers ─────────────────────────────────────────────────────
 
+@Composable
 private fun statusCodeColor(code: Long?): Color = when {
-    code == null        -> Color(0xFF888780)
-    code < 300          -> Color(0xFF3B6D11) // green-700
-    code < 400          -> Color(0xFF854F0B) // amber-700
-    code < 500          -> Color(0xFFA32D2D) // red-700
-    else                -> Color(0xFF791F1F) // red-800
+    code == null        -> MaterialTheme.colorScheme.onSurfaceVariant
+    code < 300          -> MaterialTheme.colorScheme.primary
+    code < 400          -> MaterialTheme.colorScheme.tertiary
+    code < 500          -> MaterialTheme.colorScheme.error
+    else                -> MaterialTheme.colorScheme.error
 }
 
+@Composable
 private fun statusCodeBg(code: Long?): Color = when {
-    code == null        -> Color(0xFFF1EFE8) // gray-50
-    code < 300          -> Color(0xFFEAF3DE) // green-50
-    code < 400          -> Color(0xFFFAEEDA) // amber-50
-    code < 500          -> Color(0xFFFCEBEB) // red-50
-    else                -> Color(0xFFFCEBEB)
+    code == null        -> MaterialTheme.colorScheme.surfaceVariant
+    code < 300          -> MaterialTheme.colorScheme.primaryContainer
+    code < 400          -> MaterialTheme.colorScheme.tertiaryContainer
+    code < 500          -> MaterialTheme.colorScheme.errorContainer
+    else                -> MaterialTheme.colorScheme.errorContainer
 }
 
+@Composable
 private fun statusCodeBorder(code: Long?): Color = when {
-    code == null        -> Color(0xFFB4B2A9) // gray-200
-    code < 300          -> Color(0xFFC0DD97) // green-100
-    code < 400          -> Color(0xFFFAC775) // amber-100
-    code < 500          -> Color(0xFFF7C1C1) // red-100
-    else                -> Color(0xFFF7C1C1)
+    code == null        -> MaterialTheme.colorScheme.outline
+    code < 300          -> MaterialTheme.colorScheme.primaryContainer
+    code < 400          -> MaterialTheme.colorScheme.tertiaryContainer
+    code < 500          -> MaterialTheme.colorScheme.errorContainer
+    else                -> MaterialTheme.colorScheme.errorContainer
 }
 
+@Composable
 private fun statusDotColor(code: Long?): Color = when {
-    code == null        -> Color(0xFFB4B2A9)
-    code < 300          -> Color(0xFF639922) // green-400
-    code < 400          -> Color(0xFFBA7517) // amber-600
-    code < 500          -> Color(0xFFE24B4A) // red-400
-    else                -> Color(0xFFA32D2D)
+    code == null        -> MaterialTheme.colorScheme.outline
+    code < 300          -> MaterialTheme.colorScheme.primary
+    code < 400          -> MaterialTheme.colorScheme.tertiary
+    code < 500          -> MaterialTheme.colorScheme.error
+    else                -> MaterialTheme.colorScheme.error
 }
 
 // ─── Entry composable (with ViewModel) ───────────────────────────────────────
@@ -128,7 +130,6 @@ private fun statusDotColor(code: Long?): Color = when {
 internal fun TransactionListScreen(
     openTransaction: (Long) -> Unit,
     openOverridesScreen: () -> Unit,
-    openAddOverrideScreen: (Long) -> Unit,
 ) {
     val viewModel = viewModel<TransactionListViewModel> {
         TransactionListViewModel(InspektorDataSourceImpl.Instance, FileSharer())
@@ -165,7 +166,6 @@ internal fun TransactionListScreen(
         searchTermState      = viewModel.searchFieldState,
         onClickTransaction   = openTransaction,
         openOverridesScreen  = openOverridesScreen,
-        onAddOverride        = openAddOverrideScreen,
         allCount             = viewModel.allCount.collectAsState().value,
         startDate            = viewModel.startDate.collectAsState().value,
         endDate              = viewModel.endDate.collectAsState().value,
@@ -186,7 +186,6 @@ internal fun TransactionListScreen(
     searchTermState: TextFieldState,
     onClickTransaction: (Long) -> Unit,
     openOverridesScreen: () -> Unit,
-    onAddOverride: (transaction: Long) -> Unit,
     allCount: Long,
     startDate: Instant,
     endDate: Instant,
@@ -325,7 +324,6 @@ internal fun TransactionListScreen(
                             TransactionItem(
                                 transaction = transaction,
                                 onClick     = { onClickTransaction(transaction.id) },
-                                onAddOverride = { onAddOverride(transaction.id) },
                                 modifier    = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                             )
                         }
@@ -598,7 +596,6 @@ private fun DateHeader(label: String, count: Int) {
 internal fun TransactionItem(
     transaction: GetAllLatestWithLimit,
     onClick: () -> Unit,
-    onAddOverride: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val code       = transaction.responseCode
@@ -699,11 +696,6 @@ internal fun TransactionItem(
                         tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                     )
                 }
-
-                DefaultIconButton(
-                    onClick = onAddOverride,
-                    tooltipText = "Add Override",
-                ) { AddOverrideIcon() }
             }
         }
     }

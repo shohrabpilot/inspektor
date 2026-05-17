@@ -13,7 +13,7 @@ fun main() = application {
     setApplicationId("pro.cashkeeper.inspektor.sample")
     Window(
         title = "Inspektor Sample",
-        state = rememberWindowState(width = 800.dp, height = 600.dp),
+        state = rememberWindowState(width = 1100.dp, height = 700.dp),
         onCloseRequest = ::exitApplication,
     ) {
         window.minimumSize = Dimension(350, 600)

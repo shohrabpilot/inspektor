@@ -15,7 +15,7 @@ actual fun openInspektor() {
     }
     window.apply {
         contentPane.add(composePanel)
-        setSize(800, 600)
+        setSize(1100, 700)
         isVisible = true
     }
 }

@@ -60,7 +60,7 @@ internal fun TransactionDetailsScreen(
     onBack: () -> Unit,
     openAddOverrideScreen: () -> Unit,
 ) {
-    val viewModel = viewModel {
+    val viewModel = viewModel(key = "transaction-details-$transactionId") {
         TransactionDetailsViewModel(transactionId, InspektorDataSourceImpl.Instance)
     }
     TransactionDetailsScreen(
