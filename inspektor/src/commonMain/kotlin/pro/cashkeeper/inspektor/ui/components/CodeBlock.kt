@@ -49,11 +49,16 @@ import org.jetbrains.compose.resources.painterResource
 internal enum class Format {
     Json, Unknown;
     companion object {
-        fun parse(contentType: String?): Format {
-            return when (contentType?.lowercase()) {
-                "application/json" -> Json
-                else -> Unknown
+        fun parse(contentType: String?, code: String): Format {
+            val type = contentType?.lowercase() ?: ""
+            if (type.contains("application/json")) return Json
+
+            val trimmed = code.trimStart()
+            if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+                return Json
             }
+
+            return Unknown
         }
     }
 }
@@ -71,7 +76,7 @@ internal fun CodeBlock(
         SearchableTextState(initialText = code, scope)
     }
 
-    var formatted by remember { mutableStateOf(false) }
+    var formatted by remember { mutableStateOf(format != Format.Unknown) }
     var showSearch by remember { mutableStateOf(false) }
     var softWrap by remember { mutableStateOf(true) }
 

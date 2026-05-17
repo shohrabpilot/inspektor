@@ -21,7 +21,7 @@ internal fun RequestBodyView(transaction: HttpTransaction) {
                 CodeBlock(
                     AnnotatedString(transaction.originalRequestBody),
                     Modifier.fillMaxWidth(),
-                    format = Format.parse(transaction.requestContentType),
+                    format = Format.parse(transaction.requestContentType, transaction.originalRequestBody),
                 )
             }
         }
@@ -32,7 +32,7 @@ internal fun RequestBodyView(transaction: HttpTransaction) {
         CodeBlock(
             AnnotatedString(transaction.requestBody),
             Modifier.fillMaxWidth(),
-            format = Format.parse(transaction.requestContentType),
+            format = Format.parse(transaction.requestContentType, transaction.requestBody),
         )
     }
 }
