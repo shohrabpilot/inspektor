@@ -3,8 +3,11 @@ package pro.cashkeeper.inspektor.ui.transactiondetails
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -34,13 +37,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
-import pro.cashkeeper.inspektor.platform.clipEntryOf
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pro.cashkeeper.inspektor.data.HttpTransaction
 import pro.cashkeeper.inspektor.data.InspektorDataSourceImpl
+import pro.cashkeeper.inspektor.platform.clipEntryOf
 import pro.cashkeeper.inspektor.ui.components.AddOverrideIcon
 import pro.cashkeeper.inspektor.ui.components.DefaultIconButton
 import pro.cashkeeper.inspektor.ui.transactiondetails.components.HeadersView
@@ -48,6 +52,7 @@ import pro.cashkeeper.inspektor.ui.transactiondetails.components.RequestBodyView
 import pro.cashkeeper.inspektor.ui.transactiondetails.components.ResponseBodyView
 import pro.cashkeeper.inspektor.utils.toCurlString
 import kotlinx.coroutines.launch
+import pro.cashkeeper.inspektor.ui.transactiondetails.components.MethodBadge
 
 @Composable
 internal fun TransactionDetailsScreen(
@@ -68,7 +73,6 @@ internal fun TransactionDetailsScreen(
         }
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,6 +111,7 @@ internal fun TransactionDetailsScreen(
     }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
                 navigationIcon = {
@@ -119,20 +124,17 @@ internal fun TransactionDetailsScreen(
                         Text(text = "Loading...")
                         return@CenterAlignedTopAppBar
                     }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = transaction.method ?: "",
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // Method badge
+                        MethodBadge(method = transaction.method ?: "")
                         Spacer(Modifier.width(8.dp))
                         Text(
                             text = transaction.path ?: "",
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontFamily = FontFamily.Monospace,
-                                fontSize = 16.sp,
-                            )
+                                fontSize = 14.sp,
+                            ),
+                            maxLines = 1,
                         )
                     }
                 },
@@ -140,13 +142,10 @@ internal fun TransactionDetailsScreen(
                     DefaultIconButton(
                         onClick = {
                             scope.launch {
-                                // Copy to clipboard
                                 clipboard.setClipEntry(
-                                    clipEntryOf(
-                                        transaction?.toCurlString() ?: ""
-                                    )
+                                    clipEntryOf(transaction?.toCurlString() ?: "")
                                 )
-                                snackbarHostState.showSnackbar("Copied as CURL")
+                                snackbarHostState.showSnackbar("Copied as cURL")
                             }
                         },
                         tooltipText = "Copy as cURL",
@@ -167,9 +166,7 @@ internal fun TransactionDetailsScreen(
                 },
             )
         },
-        snackbarHost = {
-            SnackbarHost(snackbarHostState)
-        },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { paddingValues ->
         if (transaction == null) {
             CircularProgressIndicator()
@@ -178,7 +175,7 @@ internal fun TransactionDetailsScreen(
 
         var selectedTabIndex by remember { mutableStateOf(0) }
 
-        Column(Modifier.padding(paddingValues)) {
+        Column(Modifier.padding(paddingValues).fillMaxSize()) {
             PrimaryTabRow(
                 selectedTabIndex = selectedTabIndex,
                 indicator = {
@@ -198,7 +195,8 @@ internal fun TransactionDetailsScreen(
                     onClick = { selectedTabIndex = 1 },
                     text = {
                         Text(
-                            "Request" + transaction.requestPayloadSize?.let { " ($it)" }.orEmpty()
+                            "Request" + transaction.requestPayloadSize
+                                ?.let { " ($it)" }.orEmpty()
                         )
                     },
                 )
@@ -207,20 +205,19 @@ internal fun TransactionDetailsScreen(
                     onClick = { selectedTabIndex = 2 },
                     text = {
                         Text(
-                            "Response" + transaction.responsePayloadSize?.let { " ($it)" }.orEmpty()
+                            "Response" + transaction.responsePayloadSize
+                                ?.let { " ($it)" }.orEmpty()
                         )
                     },
                 )
             }
 
+            val detailModifier = Modifier.fillMaxSize().weight(1f)
             when (selectedTabIndex) {
-                0 -> HeadersView(transaction)
-                1 -> RequestBodyView(transaction)
-                2 -> ResponseBodyView(transaction)
+                0 -> HeadersView(transaction, detailModifier.verticalScroll(rememberScrollState()))
+                1 -> RequestBodyView(transaction, detailModifier)
+                2 -> ResponseBodyView(transaction, detailModifier)
             }
-
         }
-
     }
-
 }

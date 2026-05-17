@@ -114,7 +114,7 @@ internal fun OverridesListScreen(
         },
     ) {
         Column(
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it).fillMaxSize()
         ) {
             SimpleSearchBar(
                 searchFieldState = searchFieldState,
@@ -122,7 +122,7 @@ internal fun OverridesListScreen(
                 modifier = Modifier.padding(8.dp),
             )
 
-            LazyColumn {
+            LazyColumn(modifier = Modifier.weight(1f)) {
                 items(overrides) { override ->
                     OverrideRow(
                         override = override,

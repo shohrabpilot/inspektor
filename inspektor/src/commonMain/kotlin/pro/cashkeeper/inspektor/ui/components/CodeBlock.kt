@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -154,6 +155,7 @@ internal fun CodeBlock(
         AnimatedContent(
             formatted,
             transitionSpec = { fadeIn() togetherWith fadeOut() },
+            modifier = Modifier.weight(1f)
         ) {
             if (it)
                 JsonTree(
@@ -161,15 +163,15 @@ internal fun CodeBlock(
                     onLoading = {
                         CircularProgressIndicator()
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxSize(),
                     textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
                 )
             else
-                SelectionContainer {
+                SelectionContainer(modifier = Modifier.fillMaxSize()) {
                     SearchableText(
                         searchState = searchableTextState,
                         style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxSize(),
                         softWrap = softWrap,
                         showLineNumbers = true
                     )

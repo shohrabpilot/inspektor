@@ -1,6 +1,8 @@
 package pro.cashkeeper.inspektor.ui
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,7 +18,11 @@ import pro.cashkeeper.inspektor.ui.transactionlist.TransactionListScreen
 internal fun App() = InspektorTheme {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "transactions") {
+    NavHost(
+        navController = navController,
+        startDestination = "transactions",
+        modifier = Modifier.fillMaxSize()
+    ) {
         composable("transactions") {
             TransactionListScreen(
                 openTransaction = { id ->
